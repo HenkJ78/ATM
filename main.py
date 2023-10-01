@@ -1,5 +1,3 @@
-# At the ATM you can deposit and withdraw money. You can also check balance.
-
 # Starting menu
 balance = 50000  # balance client
 atm = 100000  # amount of cash available in atm

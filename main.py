@@ -1,6 +1,6 @@
 # Starting menu
 balance = 50000  # balance client
-atm = 100000  # amount of cash available in atm
+atm = 0
 
 pincodes = ["1979", "2012", "1978", "1999"]
 
@@ -19,7 +19,7 @@ denominations = {
     '€5': 200,
 }
 
-print("Good morning//Good afternoon//Good evening, welcome to the ATM.\n")  # print a quote based on time a day
+print("Good morning/Good afternoon/Good evening, welcome to the ATM.\n")
 print("We accept the following cards: maestro, mastercard, debit card")
 
 start = input("Enter your card and enter 'Go' to Start or 'Stop' to Quit: ").lower()
@@ -36,7 +36,7 @@ if is_on:
     pincode = input("Pincode: ")
     if pincode in pincodes:
         print("\nPLEASE SELECT SERVICE")
-        choice = input("Enter ('W' for Withdrawal, 'D' for Deposit, 'B' for Balance, 'M' for Menu or 'E' for Exit) ").lower()
+        choice = input("Enter ('W' for Withdrawal, 'D' for Deposit, 'B' for Balance, 'M' for Menu or 'E' for Exit): ").lower()
         if choice == "w":
             # Withdrawal (choice amount)
             withdrawal_amount = int(input("What amount do you want to withdrawal: "))
@@ -60,32 +60,35 @@ if is_on:
     else:
         print("Pincode not recognized!")
 
-print()
-# Wait
-print("Please wait")
+# print()
+# # Wait
+# print("Please wait")
+#
+# # Take out debit card
+# print("Please take out your debit card.")
+#
+# # processing the money
+# print("Please wait, your withdrawal is being processed.")
+#
+# # Take out money
+# print("Please take out your money.")
+#
+# # receipt
+# receipt = input("Do you want a receipt? Press 'Y' or 'N' ").lower()
+# if receipt == "y":
+#     print("Please wait for receipt.\n")
+#
+# # ready
+# print("Have nice day! Till next time.")
 
-# Take out debit card
-print("Please take out your debit card.")
-
-# processing the money
-print("Please wait, your withdrawal is being processed.")
-
-# Take out money
-print("Please take out your money.")
-
-# receipt
-receipt = input("Do you want a receipt? Press 'Y' or 'N' ").lower()
-if receipt == "y":
-    print("Please wait for receipt.\n")
-
-# ready
-print("Have nice day! Till next time.")
-
-# TODO: 1. If pincode is wrong, ask to enter another time or 'Q' to quit
-# TODO: 2. Change withdrawal. Ask for bill choice and adjust amount in denominations
-# TODO: 3. Report - Ask for denominations
-# TODO: 4. Create clients and check for pincode and balance e.d.
+# TODO: If pincode is wrong, ask to enter another time or 'Q' to quit
+# TODO: After choice gif it the option to make another choice
+# TODO: Amount of cash available in atm
+# TODO: Print a greeting based on time a day
+# TODO: Change withdrawal. Ask for bill choice and adjust amount in denominations
+# TODO: Report - Ask for denominations
+# TODO: Create clients and check for pincode and balance e.d.
 # Error: show message and number of company which can be called
 # Maintenance
 # Keep track of the current amount of bills. If almost empty send message to fill
-# TODO 10. Application with Flask or Django
+# TODO: Application with Flask or Django

@@ -2,7 +2,12 @@
 balance = 50000  # balance client
 atm = 0
 
-pincodes = ["1979", "2012", "1978", "1999"]
+clients = {
+    "Henk van Houten": "1978",
+    "Jessica Reina": "1979",
+    "Collin van Houten": "2012",
+    "Ashly Pinzon": "1999"
+}
 
 choices = {
     'w': 'withdrawal',
@@ -34,8 +39,8 @@ if is_on:
     # Enter pincode
     print("\nPlease enter your pincode")
     pincode = input("Pincode: ")
-    if pincode in pincodes:
-        print("\nPLEASE SELECT SERVICE")
+    if pincode in clients.values():
+        print("\nHello", list(clients.keys())[list(clients.values()).index(pincode)] + "," + " Please Select Service.")
         choice = input("Enter ('W' for Withdrawal, 'D' for Deposit, 'B' for Balance, 'M' for Menu or 'E' for Exit): ").lower()
         if choice == "w":
             # Withdrawal (choice amount)

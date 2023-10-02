@@ -37,7 +37,7 @@ if start == "stop":
 # Choice
 if is_on:
     # Enter pincode
-    print("\nPlease enter your pincode")
+    print("\nPlease enter your pincode.")
     pincode = input("Pincode: ")
     if pincode in clients.values():
         print("\nHello", list(clients.keys())[list(clients.values()).index(pincode)] + "," + " Please Select Service.")

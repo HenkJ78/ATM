@@ -21,7 +21,7 @@ class Account:
             print("You entered a wrong amount.")
 
     def check_balance(self):
-        print(f"Your balance is: {self.balance}")
+        print(f"The balance is: {self.balance}")
 
     def change_pin(self):
         change = input("Do you really want to change your pincode? Type 'Y' for yes or 'N' for no! ").lower()
@@ -46,49 +46,58 @@ class Account:
 #     '€5': 200,
 # }
 
+client1 = Account("Henk van Houten", "123456", "1978")
+client2 = Account("Jessica Reina", "123457", "1979")
+client3 = Account("Collin van Houten", "123458", "2012")
+client4 = Account("Ashly Pinzon", "123459", "1999")
 
-if __name__ == '__main':
+client1.deposit(2525.00)
+client1.withdrawal(32.00)
+client1.check_balance()
+print(client1.pincode)
+client1.change_pin()
+print(client1.pincode)
 
-print("Good morning/Good afternoon/Good evening, welcome to the ATM.\n")
-print("We accept the following cards: maestro, mastercard, debit card")
+    # print("Good morning/Good afternoon/Good evening, welcome to the ATM.\n")
+    # print("We accept the following cards: maestro, mastercard, debit card")
+    #
+    # start = input("Enter your card and enter 'Go' to Start or 'Stop' to Quit: ").lower()
+    # if start == "go":
+    #     is_on = True
+    # if start == "stop":
+    #     is_on = False
+    #     print("Have a nice day!")
+    #
+    # # Choice
+    # if is_on:
+    #     # Enter pincode
+    #     print("\nPlease enter your pincode.")
+    #     pincode = input("Pincode: ")
+    #     if pincode in clients.values():
+    #         print("\nHello", list(clients.keys())[list(clients.values()).index(pincode)] + "," + " Please Select Service.")
+    #         choice = input("Enter ('W' for Withdrawal, 'D' for Deposit, 'B' for Balance, 'M' for Menu or 'E' for Exit): ").lower()
+    #         if choice == "w":
+    #             # Withdrawal (choice amount)
+    #             withdrawal_amount = int(input("What amount do you want to withdrawal: "))
+    #             if withdrawal_amount >= balance:
+    #                 print(f"Withdrawal is not possible, you have insufficient funds. Your current balance is {balance}")
+    #             else:
+    #                 balance -= withdrawal_amount
+    #                 print(f"Your new balance is EUR {balance}")
+    #         elif choice == "d":
+    #             deposit_amount = int(input("What amount do you want to deposit: "))
+    #             balance += deposit_amount
+    #         elif choice == "b":
+    #             print(f"Your balance: EUR {balance}")
+    #         elif choice == "m":
+    #             print("Please wait for main menu")
+    #         elif choice == "e":
+    #             print("Goodbye!")
+    #             is_on = False
+    #         else:
+    #             print("Wrong choice, please try again!")
+    #     else:
+    #         print("Pincode not recognized!")
 
-start = input("Enter your card and enter 'Go' to Start or 'Stop' to Quit: ").lower()
-if start == "go":
-    is_on = True
-if start == "stop":
-    is_on = False
-    print("Have a nice day!")
 
-# Choice
-if is_on:
-    # Enter pincode
-    print("\nPlease enter your pincode.")
-    pincode = input("Pincode: ")
-    if pincode in clients.values():
-        print("\nHello", list(clients.keys())[list(clients.values()).index(pincode)] + "," + " Please Select Service.")
-        choice = input("Enter ('W' for Withdrawal, 'D' for Deposit, 'B' for Balance, 'M' for Menu or 'E' for Exit): ").lower()
-        if choice == "w":
-            # Withdrawal (choice amount)
-            withdrawal_amount = int(input("What amount do you want to withdrawal: "))
-            if withdrawal_amount >= balance:
-                print(f"Withdrawal is not possible, you have insufficient funds. Your current balance is {balance}")
-            else:
-                balance -= withdrawal_amount
-                print(f"Your new balance is EUR {balance}")
-        elif choice == "d":
-            deposit_amount = int(input("What amount do you want to deposit: "))
-            balance += deposit_amount
-        elif choice == "b":
-            print(f"Your balance: EUR {balance}")
-        elif choice == "m":
-            print("Please wait for main menu")
-        elif choice == "e":
-            print("Goodbye!")
-            is_on = False
-        else:
-            print("Wrong choice, please try again!")
-    else:
-        print("Pincode not recognized!")
-
-
-# Added the TODOs to Jira as requirements (User Stories) and tasks
+    # Added the TODOs to Jira as requirements (User Stories) and tasks

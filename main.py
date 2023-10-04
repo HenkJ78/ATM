@@ -1,28 +1,53 @@
-# Starting menu
-balance = 50000  # balance client
-atm = 0
+class Account:
+    def __init__(self, name, account_number, pincode):
+        self.name = name
+        self.account_number = account_number
+        self.pincode = pincode
+        self.balance = 0
 
-clients = {
-    "Henk van Houten": "1978",
-    "Jessica Reina": "1979",
-    "Collin van Houten": "2012",
-    "Ashly Pinzon": "1999"
-}
+    def deposit(self, amount):
+        if amount % 5 == 0:
+            self.balance += amount
+        else:
+            print("You entered a wrong amount.")
 
-choices = {
-    'w': 'withdrawal',
-    'd': 'deposit',
-    'b': 'balance',
-    'c': 'cancel',
-}
+    def withdrawal(self, amount):
+        if amount % 5 == 0:
+            if (self.balance - amount) >= 0:
+                self.balance -= amount
+            else:
+                print(f"Your balance is not sufficient")
+        else:
+            print("You entered a wrong amount.")
 
-denominations = {
-    '€100': 200,
-    '€50': 200,
-    '€20': 200,
-    '€10': 200,
-    '€5': 200,
-}
+    def check_balance(self):
+        print(f"Your balance is: {self.balance}")
+
+    def change_pin(self):
+        change = input("Do you really want to change your pincode? Type 'Y' for yes or 'N' for no! ").lower()
+        if change == "y":
+            self.pincode = input("Enter a 4 digit number: ")
+        else:
+            print("You are being redirected to the main menu")
+
+
+# choices = {
+#     'w': 'withdrawal',
+#     'd': 'deposit',
+#     'b': 'balance',
+#     'c': 'cancel',
+# }
+#
+# denominations = {
+#     '€100': 200,
+#     '€50': 200,
+#     '€20': 200,
+#     '€10': 200,
+#     '€5': 200,
+# }
+
+
+if __name__ == '__main':
 
 print("Good morning/Good afternoon/Good evening, welcome to the ATM.\n")
 print("We accept the following cards: maestro, mastercard, debit card")

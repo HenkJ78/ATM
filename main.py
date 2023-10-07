@@ -10,6 +10,7 @@ class Account:
             self.balance += amount
         else:
             print("You entered a wrong amount.")
+        return amount
 
     def withdrawal(self, amount):
         if amount % 5 == 0:
@@ -19,9 +20,15 @@ class Account:
                 print(f"Your balance is not sufficient")
         else:
             print("You entered a wrong amount.")
+        return amount
 
     def check_balance(self):
         print(f"The balance is: {self.balance}")
+
+    def receipt(self):
+        receipt = input("Do want a receipt of your transaction? Type 'Y' for yes or 'N' for no! ").lower()
+        if receipt == "y":
+            pass
 
     def change_pin(self):
         change = input("Do you really want to change your pincode? Type 'Y' for yes or 'N' for no! ").lower()
@@ -54,9 +61,7 @@ client4 = Account("Ashly Pinzon", "123459", "1999")
 client1.deposit(2525.00)
 client1.withdrawal(32.00)
 client1.check_balance()
-print(client1.pincode)
-client1.change_pin()
-print(client1.pincode)
+
 
     # print("Good morning/Good afternoon/Good evening, welcome to the ATM.\n")
     # print("We accept the following cards: maestro, mastercard, debit card")

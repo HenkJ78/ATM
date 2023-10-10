@@ -5,13 +5,15 @@ import pytz
 db = sqlite3.connect('accounts.db')
 db.execute("CREATE TABLE IF NOT EXISTS accounts (name TEXT PRIMARY KEY NOT NULL, account_number TEXT NOT NULL, balance INTEGER NOT NULL)")
 db.execute("CREATE TABLE IF NOT EXISTS transactions (time TIMESTAMP NOT NULL, account TEXT NOT NULL, amount INTEGER NOT NULL, PRIMARY KEY (time, account))")
+db.execute("CREATE TABLE IF NOT EXISTS security (account_number TEXT PRIMARY KEY NOT NULL, pincode TEXT NOT NULL)")
+# create security
 
 class Account:
 
     def current_time(self):
         return pytz.utc.localize(datetime.datetime.utcnow())
 
-    def __init__(self, name, account_number, balance=0):
+    def __init__(self, name, account_number, pincode, balance=0):
         cursor = db.execute("SELECT name, account_number, balance FROM accounts WHERE (name = ?)", (name,))
         row = cursor.fetchone()
         if row:
@@ -19,8 +21,10 @@ class Account:
         else:
             self.name = name
             self.account_number = account_number
+            self.pincode = pincode
             self.balance = balance
             cursor.execute("INSERT INTO accounts VALUES(?, ?, ?)", (name, account_number, balance))
+            cursor.execute("INSERT INTO security VALUES(?, ?)", (account_number, pincode))
             cursor.connection.commit()
 
     def deposit(self, amount):
@@ -83,14 +87,15 @@ class Account:
 
 if __name__ == '__main__':
 
-    client1 = Account("Henk van Houten", "123456", 0)
-    client2 = Account("Jessica Reina", "123457", 0)
-    client3 = Account("Collin van Houten", "123458", 0)
-    client4 = Account("Ashly Pinzon", "123459", 0)
-    client5 = Account("Geert de Vries", "1234563", 0 )
+    client1 = Account("Henk van Houten", "123456", "1978", 0)
+    client2 = Account("Jessica Reina", "123457", "1979", 0)
+    client3 = Account("Collin van Houten", "123458", "2012", 0)
+    client4 = Account("Ashly Pinzon", "123459", "1999", 0)
+    client5 = Account("Geert de Vries", "1234563", "1978", 0)
 
     client1.deposit(2500)
     client1.withdrawal(1000)
+    client2.deposit(100)
 
     db.close()
 

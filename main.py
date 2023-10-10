@@ -1,10 +1,16 @@
+import datetime
 import sqlite3
+import pytz
 
 db = sqlite3.connect('accounts.db')
 db.execute("CREATE TABLE IF NOT EXISTS accounts (name TEXT PRIMARY KEY NOT NULL, account_number TEXT NOT NULL, balance INTEGER NOT NULL)")
 db.execute("CREATE TABLE IF NOT EXISTS transactions (time TIMESTAMP NOT NULL, account TEXT NOT NULL, amount INTEGER NOT NULL, PRIMARY KEY (time, account))")
 
 class Account:
+
+    def current_time(self):
+        return pytz.utc.localize(datetime.datetime.utcnow())
+
     def __init__(self, name, account_number, balance=0):
         cursor = db.execute("SELECT name, account_number, balance FROM accounts WHERE (name = ?)", (name,))
         row = cursor.fetchone()
@@ -19,7 +25,12 @@ class Account:
 
     def deposit(self, amount):
         if amount % 5 == 0:
-            self.balance += amount
+            new_balance = self.balance + amount
+            deposit_time = self.current_time()
+            db.execute("UPDATE accounts SET balance = ? WHERE (name = ?)", (new_balance, self.name))
+            db.execute("INSERT INTO transactions VALUES(?,?,?)", (deposit_time, self.name, amount))
+            db.commit()
+            self.balance = new_balance
         else:
             print("You entered a wrong amount.")
         return amount
@@ -27,7 +38,12 @@ class Account:
     def withdrawal(self, amount):
         if amount % 5 == 0:
             if (self.balance - amount) >= 0:
-                self.balance -= amount
+                new_balance = self.balance - amount
+                withdrawal_time = Account.current_time(self)
+                db.execute("UPDATE accounts SET balance = ? WHERE (name = ?)", (new_balance, self.name))
+                db.execute("INSERT INTO transactions VALUES(?,?,?)", (withdrawal_time, self.name, -amount))
+                db.commit()
+                self.balance = new_balance
             else:
                 print(f"Your balance is not sufficient")
         else:
@@ -73,9 +89,8 @@ if __name__ == '__main__':
     client4 = Account("Ashly Pinzon", "123459", 0)
     client5 = Account("Geert de Vries", "1234563", 0 )
 
-    client1.deposit(2525.00)
-    client1.withdrawal(32.00)
-    client1.check_balance()
+    client1.deposit(2500)
+    client1.withdrawal(1000)
 
     db.close()
 

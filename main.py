@@ -63,9 +63,11 @@ class Account:
             pass
 
     def change_pin(self):
-        change = input("Do you really want to change your pincode? Type 'Y' for yes or 'N' for no! ").lower()
+        change = input("Do you really want to change your pincode? Type 'Y' for yes or 'N' for no: ").lower()
         if change == "y":
             self.pincode = input("Enter a 4 digit number: ")
+            db.execute("UPDATE security SET pincode = ? WHERE (account_number = ?)", (self.pincode, self.account_number))
+            db.commit()
         else:
             print("You are being redirected to the main menu")
 
@@ -87,15 +89,29 @@ class Account:
 
 if __name__ == '__main__':
 
+    #create accounts
     client1 = Account("Henk van Houten", "123456", "1978", 0)
     client2 = Account("Jessica Reina", "123457", "1979", 0)
     client3 = Account("Collin van Houten", "123458", "2012", 0)
     client4 = Account("Ashly Pinzon", "123459", "1999", 0)
     client5 = Account("Geert de Vries", "1234563", "1978", 0)
 
+    # Check if a deposit gets stored? and if we get an error message if the wrong denominations are given
     client1.deposit(2500)
-    client1.withdrawal(1000)
     client2.deposit(100)
+    client3.deposit(23.45)
+
+    # Check if a withdrawal is being processed and gets stored? and if we get an error message if we try to withdraw
+    # more than we have
+    client1.withdrawal(1000)
+    client2.withdrawal(150)
+
+    # Can a client change the pincode and does the new one gets stored?
+    client1.change_pin()
+
+
+
+
 
     db.close()
 

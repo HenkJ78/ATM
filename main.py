@@ -1,9 +1,21 @@
+import sqlite3
+
+db = sqlite3.connect('accounts.db')
+db.execute("CREATE TABLE IF NOT EXISTS accounts (name TEXT PRIMARY KEY NOT NULL, account_number TEXT NOT NULL, balance INTEGER NOT NULL)")
+db.execute("CREATE TABLE IF NOT EXISTS transactions (time TIMESTAMP NOT NULL, account TEXT NOT NULL, amount INTEGER NOT NULL, PRIMARY KEY (time, account))")
+
 class Account:
-    def __init__(self, name, account_number, pincode):
-        self.name = name
-        self.account_number = account_number
-        self.pincode = pincode
-        self.balance = 0
+    def __init__(self, name, account_number, balance=0):
+        cursor = db.execute("SELECT name, account_number, balance FROM accounts WHERE (name = ?)", (name,))
+        row = cursor.fetchone()
+        if row:
+            self.name, self.account_number, self.balance = row
+        else:
+            self.name = name
+            self.account_number = account_number
+            self.balance = balance
+            cursor.execute("INSERT INTO accounts VALUES(?, ?, ?)", (name, account_number, balance))
+            cursor.connection.commit()
 
     def deposit(self, amount):
         if amount % 5 == 0:
@@ -53,14 +65,19 @@ class Account:
 #     '€5': 200,
 # }
 
-client1 = Account("Henk van Houten", "123456", "1978")
-client2 = Account("Jessica Reina", "123457", "1979")
-client3 = Account("Collin van Houten", "123458", "2012")
-client4 = Account("Ashly Pinzon", "123459", "1999")
+if __name__ == '__main__':
 
-client1.deposit(2525.00)
-client1.withdrawal(32.00)
-client1.check_balance()
+    client1 = Account("Henk van Houten", "123456", 0)
+    client2 = Account("Jessica Reina", "123457", 0)
+    client3 = Account("Collin van Houten", "123458", 0)
+    client4 = Account("Ashly Pinzon", "123459", 0)
+    client5 = Account("Geert de Vries", "1234563", 0 )
+
+    client1.deposit(2525.00)
+    client1.withdrawal(32.00)
+    client1.check_balance()
+
+    db.close()
 
 
     # print("Good morning/Good afternoon/Good evening, welcome to the ATM.\n")
